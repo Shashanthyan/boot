@@ -1,0 +1,267 @@
+<link rel="stylesheet" href="{ %static 'css/index2.css'% }">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    font-family: "bodoni moda";
+  }
+
+
+  .navbar-custom {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    background-color: #111111;
+  }
+
+  .logo {
+    font-size: 28px;
+    font-weight: 600;
+  }
+
+  .nav-center a {
+    color: white;
+    margin: 0 12px;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+.icons a {
+    color: white;
+    margin-left: 15px;
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  .hero-content {
+    height: 100%;
+  }
+
+  .hero h1 {
+    font-size: 150px;
+    font-weight: lighter;
+    letter-spacing: 3px;
+    padding-left: 230px;
+
+
+  }
+
+
+
+</style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+
+  <nav class="navbar navbar-expand-lg navbar-custom px-4">
+    <div class="container-fluid">
+
+
+      <div class="logo text-white">Naveena</div>
+      <div class="mx-auto d-none d-lg-flex nav-center">
+        <a href="{% url 'home' %}">HOME</a>
+        <a href="{% url 'about' %}">ABOUT</a>
+        <a href="{% url 'product' %}">PRODUCT</a>
+
+        <div class="dropdown">
+        <a href="#"
+           class="dropdown-toggle"
+           data-bs-toggle="dropdown"
+           aria-expanded="false">
+            CATEGORY
+        </a>
+
+        <ul class="dropdown-menu" style="background-color: black;">
+
+            <li>
+                <a class="dropdown-item"
+                   href="{% url 'category' 'Babydoll Nightwear' %}">
+                    Babydoll Nightwear
+                </a>
+            </li>
+
+            <li>
+                <a class="dropdown-item"
+                   href="{% url 'category' 'Casual Wear' %}">
+                    Casual Wear
+                </a>
+            </li>
+
+            <li>
+                <a class="dropdown-item"
+                   href="{% url 'category' 'Party Wear' %}">
+                    Party Wear
+                </a>
+            </li>
+
+            <li>
+                <a class="dropdown-item"
+                   href="{% url 'category' 'Traditional Wear' %}">
+                    Formal Wear
+                </a>
+            </li>
+
+             <li>
+                <a class="dropdown-item"
+                   href="{% url 'category' 'Western Wear' %}">
+                    Formal Wear
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item"
+                   href="{% url 'category' 'Modern' %}">
+                   Modern
+                </a>
+            </li>
+        </ul>
+    </div>
+        </div>
+
+       
+
+      </div>
+
+      <div class="icons" >
+        <a href="{% url 'login' %}">LOGIN</a>
+        <a href="{% url 'signup' %}">SIGN UP</a>
+        <a href="#">SEARCH</a>
+        <a href="{% url 'wishlist' %}">LIKE(0)</a>
+        <a href="{% url 'cart_add' %}"> CART (0)</a>
+
+      </div>
+  </nav>
+
+<div class="container-fluid" style="overflow:hidden">
+    <div class="row">
+
+            <div class="col-12">
+                <br><br>
+
+
+                <!-- Search Card -->
+                <div class="card">
+                    <div class="card-header">
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{% url 'search' %}">
+                            {% csrf_token %}
+                            <div class="mb-3" style="padding-left: 1500px;">
+                                <input type="text" class="form-control"
+                                       placeholder="Search products" name="searched">
+                            </div>
+                            <button type="submit" class="btn btn-secondary " style="margin-left: 1730px;">
+                                Search Products
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+
+                <br><br>
+
+
+                <!-- Search Results Section -->
+                <div class="row gx-4 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-6 justify-content-center">
+
+
+                    {% if searched %}
+                        {% for product in searched %}
+                       
+                            {% if product.is_sale %}
+                            <div class="col mb-5">
+                                <div class="card h-100">
+
+
+                                    <!-- Sale Badge -->
+                                    <div class=" badge bg-dark text-white position-absolute "
+                                         style=" top: 0.5rem; right: 0.5rem ">Sale</div>
+
+
+                                    <!-- Product Image -->
+                                    <img class="card-img-top" src="{{ product.image.url }}" alt="..."
+                                         width="200px" height="250px"/>
+
+
+                                    <!-- Product Details -->
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <h5 class="fw-bolder">{{ product.name }}</h5>
+
+
+                                            <div class="d-flex justify-content-center small text-warning mb-2">
+                                                <div class="bi-star-fill"></div>
+                                                &nbsp;&nbsp;Sale!&nbsp;&nbsp;
+                                                <div class="bi-star-fill"></div>
+                                            </div>
+
+
+                                            <strike>${{ product.price }}</strike>
+                                            &nbsp;
+                                            ${{ product.sale_price }}
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Product Actions -->
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center">
+                                            <a class="btn btn-outline-dark mt-auto" href="{% url 'productsdet' product.id %}">
+                                                View product
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            {% else %}
+
+
+                            <!-- Product Without Sale -->
+                            <div class="col mb-5">
+                                <div class="card h-100">
+
+
+                                    <img class="card-img-top" src="{{ product.image.url }}"
+                                         width="300px" height="300px" alt="..."/>
+
+
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <h5 class="fw-bolder">{{ product.name }}</h5>
+                                            ${{ product.price }}
+                                        </div>
+                                    </div>
+
+
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center">
+                                            <a class="btn btn-outline-dark mt-auto"
+                                               href="{% url 'productsdet' product.id %}">
+                                                View product
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+    
+    </div>
+</div>

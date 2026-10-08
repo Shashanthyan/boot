@@ -1,0 +1,499 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modish Hero</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Font for classy serif look -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+        }   
+
+        .hero {
+            height: 100vh;
+            background: url({% static 'images/header.png' %})center/cover no-repeat;
+            color: white;
+            position: relative;
+        }
+
+        .navbar-custom {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+            background-color:#111111;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+         .nav-center a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .icons a {
+            color: white;
+            margin-left: 15px;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .hero-content {
+            height: 100%;
+        }
+
+        .hero h1 {
+            font-size: 90px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+
+        .shop-btn {
+            background: white;
+            color: black;
+            padding: 12px 28px;
+            border: none;
+            margin-top: 25px;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .header {
+    width: 100%;
+    height: 80px;
+    background: #111;
+    display: flex;
+    align-items: center;
+    padding: 0 35px;
+    box-sizing: border-box;
+    gap: 30px;
+}
+
+/* Logo */
+.logo {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* Navigation */
+.nav-bar {
+    display: flex;
+    gap: 25px;
+    white-space: nowrap;
+}
+
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Search */
+.search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search input {
+    width: 180px;
+    height: 35px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.search button {
+    height: 35px;
+    padding: 0 12px;
+    background: #667788;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Like & Cart */
+.actions {
+    display: flex;
+    gap: 20px;
+    white-space: nowrap;
+}
+
+.actions a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+    </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+    <header class="header">
+
+    <div class="logo">Naveena</div>
+
+    <nav class="nav-bar">
+        <a href="{% url 'home' %}">HOME</a>
+        <a href="{% url 'about' %}">ABOUT</a>
+        <a href="{% url 'product' %}">PRODUCT</a>
+        <a href="{% url 'login' %}">LOGIN</a>
+        <a href="{% url 'signup' %}">SIGN UP</a>
+    </nav>
+
+    <form method="POST" action="{% url 'search' %}" style="padding-left:800px; font-size: small;" >
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <input type="text" class="form-control" style="padding-left: 100px;"
+                                       placeholder="Search products" name="searched">
+                            </div>
+                            <button type="submit" class="btn btn-secondary">
+                                Search Products
+                            </button>
+    </form>
+
+    <div class="actions">
+       <a href="{% url 'wishlist' %}">LIKE(0)</a>
+       <a href="{% url 'cart_add' %}"> CART  (0)</a>
+    </div>
+
+</header>
+</nav>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container hero-content d-flex align-items-center">
+        <div class="row w-100">
+            <div class="col-lg-7">
+                <h1>TRUE<br>CLASSICS.</h1>
+                <button class="shop-btn">SHOP COLLECTION</button>
+            </div>
+        </div>
+    </div>
+</section>
+<br>
+
+<!-- Split Collection Section -->
+<section class="container-fluid p-0">
+    <div class="row g-0">
+
+        <!-- Women -->
+        <div class="col-md-6 split-banner women-banner d-flex align-items-center justify-content-center text-center" style="background-image: url({% static 'images/women.png' %});">
+            <div class="content text-white">
+                <h2>WOMEN</h2>
+                <button class="shop-btn">SHOP COLLECTION</button>
+            </div>
+        </div>
+
+        <!-- Men -->
+        <div class="col-md-6 split-banner men-banner d-flex align-items-center justify-content-center text-center" style="background-image: url({% static 'images/item5.jpg' %});">
+            <div class="content text-white">
+                <h2>MEN</h2>
+                <button class="shop-btn">SHOP COLLECTION</button>
+            </div>
+        </div>
+
+    </div>
+</section><br><br><br>
+
+
+<!-- New Arrival Items -->
+<section class="new-arrivals py-5">
+  <div class="container">
+
+    <!-- Heading Row -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="arrival-title">NEW ARRIVAL ITEMS</h2>
+      <a href="#" class="shop-all">SHOP ALL</a>
+    </div>
+
+    <!-- Products Row -->
+    <div class="row g-4">
+
+      <!-- Product 1 -->
+      <div class="col-md-4">
+        <div class="product-card">
+          <div class="product-img">
+            <img src="{% static 'images/item6.jpg'%}" class="img-fluid" alt="">
+            <div class="overlay">
+              <button class="add-cart">Add To Cart →</button>
+              <span class="icons">✕ &nbsp; ♥</span>
+            </div>
+          </div>
+          <div class="product-info d-flex justify-content-between mt-3">
+            <span>OVERSIZED T-SHIRT</span>
+            <strong>$22.00</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="col-md-4">
+        <div class="product-card">
+          <div class="product-img">
+            <img src="{%static 'images/item7.jpg'%}" class="img-fluid" alt="">
+            <div class="overlay">
+              <button class="add-cart">Add To Cart →</button>
+              <span class="icons">✕ &nbsp; ♥</span>
+            </div>
+          </div>
+          <div class="product-info d-flex justify-content-between mt-3">
+            <span>LEATHER OVERCOAT</span>
+            <strong>$22.00</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="col-md-4">
+        <div class="product-card">
+          <div class="product-img">
+            <img src="{%static 'images/item8.jpg'%}" class="img-fluid" alt="">
+            <div class="overlay">
+              <button class="add-cart">Add To Cart →</button>
+              <span class="icons">✕ &nbsp; ♥</span>
+            </div>
+          </div>
+          <div class="product-info d-flex justify-content-between mt-3">
+            <span>THE HUNDRED HOODY</span>
+            <strong>$22.00</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+ <section class="review-section">
+    <div class="container">
+
+      <h1 class="big-title">CUSTOMER'S REVIEWS</h1><br><br><br><br>
+
+      <div class="row justify-content-center">
+
+        <!-- Review 1 -->
+        <div class="col-lg-4 col-md-6">
+          <div class="review-card">
+            <p class="review-text">
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Voluptate non explicabo ea possimus consequuntur vel."
+            </p>
+
+            <h4 class="review-name">NICHOLAS SHRESTHA</h4>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="col-lg-4 col-md-6">
+          <div class="review-card">
+            <p class="review-text">
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Voluptate non explicabo ea possimus consequuntur vel."
+            </p>
+
+            <h4 class="review-name">KARLINA BIAS</h4>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="col-lg-4 col-md-6">
+          <div class="review-card">
+            <p class="review-text">
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Voluptate non explicabo ea possimus consequuntur vel."
+            </p>
+
+            <h4 class="review-name">JOHN DOE</h4>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Dots -->
+      <div class="dots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot active"></span>
+      </div>
+
+    </div>
+  </section><br><br><br>
+  
+  <div class="img-fluid">
+  <img src="{%static 'images/video.jpg'%}" width="100%">
+  </div>
+
+  <br><br><br>
+   <section class="news-section">
+    <div class="container">
+
+      <div class="section-top">
+        <h1 class="section-title">News Articles</h1>
+        <span class="read-all">Read All</span>
+      </div><br><br>
+
+      <div class="row">
+
+        <!-- Article 1 -->
+        <div class="col-lg-4 col-md-6">
+          <div class="article-card">
+            <img src="{%static 'images/article1.jpg'%}" alt="fashion">
+
+            <h3 class="article-title">
+              LOOK CLASSIS IN EVERY DRESS.
+            </h3>
+          </div>
+        </div>
+
+        <!-- Article 2 -->
+        <div class="col-lg-4 col-md-6">
+          <div class="article-card">
+            <img src="{%static 'images/article2.jpg'%}" alt="fashion">
+
+            <h3 class="article-title">
+              BEST COMFORTABLE CLOTHES LIST.
+            </h3>
+          </div>
+        </div>
+
+        <!-- Article 3 -->
+        <div class="col-lg-4 col-md-6">
+          <div class="article-card">
+            <img src="{%static 'images/article3.jpg'%}" alt="fashion">
+
+            <h3 class="article-title">
+              UNIQUE FASHION TRENDS.
+            </h3>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= SUBSCRIBE ================= -->
+
+  <section class="subscribe-section">
+
+    <div class="container">
+
+      <h1 class="big-text">Subscribe Us</h1>
+
+      <div class="subscribe-box">
+
+        <input
+          type="email"
+          placeholder="Write your email address here..."
+        >
+
+        <button>
+          Subscribe
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+  <footer class="footer">
+
+    <div class="container">
+
+      <div class="row justify-content-between">
+
+        <!-- Logo -->
+        <div class="col-lg-3 footer-column">
+          <h1 class="footer-logo">modish.</h1>
+        </div>
+
+        <!-- Links 1 -->
+        <div class="col-lg-2 col-md-4 footer-column">
+          <ul class="footer-links">
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'product' %}">Shop</a></li>
+            <li><a href="#">Sale</a></li>
+            <li><a href="#">Articles</a></li>
+          </ul>
+        </div>
+
+        <!-- Links 2 -->
+        <div class="col-lg-2 col-md-4 footer-column">
+          <ul class="footer-links">
+            <li><a href="#">Track Order</a></li>
+            <li><a href="#">Return Policy</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Social Links -->
+        <div class="col-lg-2 col-md-4 footer-column">
+          <ul class="footer-links">
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Youtube</a></li>
+            <li><a href="#">Pinterest</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="col-lg-3 footer-column">
+
+          <div class="contact-text">
+            Do you have any queries?<br>
+
+            <a href="mailto:templatesjungle@gmail.com">
+              templatesjungle@gmail.com
+            </a>
+
+            <br><br>
+
+            If you need support? Give us a call.
+          </div>
+
+          <div class="phone">
+            +12 23 34 456 678
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Copyright -->
+
+    <div class="copyright">
+      © 2024 Modish. All rights reserved by
+      <a href="#">TemplatesJungle</a>
+    </div>
+
+  </footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

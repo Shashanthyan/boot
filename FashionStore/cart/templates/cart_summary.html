@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    {% if cart_products %}
+
+        {% for product in cart_products %}
+
+        <div class="card mb-3">
+
+            <div class="row g-0">
+
+                <!-- Product Image -->
+                <div class="col-md-4">
+
+                    <img src="{{ product.image.url }}"
+                         class="img-fluid rounded-start"
+                         alt="{{ product.name }}">
+
+                </div>
+
+
+                <!-- Product Details -->
+                <div class="col-md-8">
+
+                    <div class="card-body">
+
+                        <center>
+
+                            <!-- Product Name -->
+                            <h5 class="card-title">
+                                {{ product.name }}
+                            </h5>
+
+                            <br>
+
+
+                            <!-- Product Description -->
+                            <p class="card-text">
+                                {{ product.description }}
+                            </p>
+
+
+                            <!-- Product Price -->
+                            {% if product.is_sale %}
+
+                                <div class="d-flex justify-content-center small text-warning mb-2">
+
+                                    <div class="bi-star-fill"></div>
+
+                                    &nbsp;&nbsp;Sale!&nbsp;&nbsp;
+
+                                    <div class="bi-star-fill"></div>
+
+                                </div>
+
+
+                                <strike>
+                                    ${{ product.price }}
+                                </strike>
+
+                                &nbsp;
+
+                                ${{ product.sale_price }}
+
+                            {% else %}
+
+                                ${{ product.price }}
+
+                            {% endif %}
+
+
+                            <br><br>
+
+
+                            <!-- ========================= -->
+                            <!-- UPDATE QUANTITY -->
+                            <!-- ========================= -->
+
+                            <div class="row justify-content-center">
+
+                                <div class="col-md-2">
+
+                                    <label>
+                                        Quantity
+                                    </label>
+
+                                </div>
+
+
+                                <div class="col-md-3">
+
+                                    <form action="{% url 'cart_update' %}"
+                                          method="POST">
+
+                                        {% csrf_token %}
+
+
+                                        <!-- Product ID -->
+                                        <input type="hidden"
+                                               name="product_id"
+                                               value="{{ product.id }}">
+
+
+                                        <!-- Quantity -->
+                                        <select name="product_qty"
+                                                class="form-select">
+
+                                            {% for key, value in quantities.items %}
+
+                                                {% if key == product.id|slugify %}
+
+                                                    <option value="1"
+                                                        {% if value == 1 %}selected{% endif %}>
+                                                        1
+                                                    </option>
+
+                                                    <option value="2"
+                                                        {% if value == 2 %}selected{% endif %}>
+                                                        2
+                                                    </option>
+
+                                                    <option value="3"
+                                                        {% if value == 3 %}selected{% endif %}>
+                                                        3
+                                                    </option>
+
+                                                    <option value="4"
+                                                        {% if value == 4 %}selected{% endif %}>
+                                                        4
+                                                    </option>
+
+                                                    <option value="5"
+                                                        {% if value == 5 %}selected{% endif %}>
+                                                        5
+                                                    </option>
+
+                                                {% endif %}
+
+                                            {% endfor %}
+
+                                        </select>
+
+
+                                        <!-- Update Button -->
+                                        <button type="submit"
+                                                class="btn btn-primary mt-2">
+
+                                            Update
+
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+
+                            <br>
+
+
+                            <!-- ========================= -->
+                            <!-- DELETE PRODUCT -->
+                            <!-- ========================= -->
+
+                            <form action="{% url 'cart_delete' %}"
+                                  method="POST">
+
+                                {% csrf_token %}
+
+
+                                <!-- Product ID -->
+                                <input type="hidden"
+                                       name="product_id"
+                                       value="{{ product.id }}">
+
+
+                                <!-- Delete Button -->
+                                <button type="submit"
+                                        class="btn btn-danger">
+
+                                    Delete
+
+                                </button>
+
+                            </form>
+
+
+                        </center>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+        <!-- Empty Cart -->
+        <div class="text-center mt-5">
+
+            <h4>
+                There's nothing in your cart
+            </h4>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

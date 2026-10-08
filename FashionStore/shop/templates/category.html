@@ -1,0 +1,358 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f8f8f3;
+    }
+
+    /* Category Header */
+    .category-header {
+        padding: 35px 50px 20px;
+        background: #f8f8f3;
+    }
+
+    .category-header h1 {
+        font-size: 22px;
+        font-weight: 500;
+        color: #111;
+        margin: 0;
+    }
+
+    /* Category menu on top */
+    .category-menu {
+        display: flex;
+        justify-content: flex-end;
+        gap: 35px;
+        margin-top: -25px;
+        margin-bottom: 20px;
+        padding-right: 50px;
+    }
+
+    .category-menu a {
+        text-decoration: none;
+        color: #222;
+        font-size: 13px;
+    }
+
+    /* Product Section */
+    .product-section {
+        padding: 10px 30px 60px;
+        background: #f8f8f3;
+    }
+
+    .product-container {
+        max-width: 1400px;
+        margin: auto;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+    }
+
+    /* Product Card */
+    .product-card {
+        background: #ffffff;
+        position: relative;
+        overflow: hidden;
+        transition: 0.3s ease;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Sale Badge */
+    .sale-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: #111;
+        color: white;
+        padding: 6px 10px;
+        font-size: 11px;
+        z-index: 5;
+    }
+
+    /* Product Image */
+    .product-image {
+        width: 100%;
+        height: 390px;
+        object-fit: cover;
+        display: block;
+        background: #eeeeee;
+    }
+
+    /* Product Information */
+    .product-info {
+        padding: 15px 12px 10px;
+        background: white;
+    }
+
+    .product-name {
+        font-size: 13px;
+        font-weight: 500;
+        text-transform: uppercase;
+        color: #222;
+        margin-bottom: 8px;
+        min-height: 32px;
+    }
+
+    .product-price {
+        font-size: 12px;
+        color: #333;
+    }
+
+    .old-price {
+        text-decoration: line-through;
+        color: #777;
+        margin-right: 8px;
+    }
+
+    .sale-price {
+        color: #111;
+        font-weight: bold;
+    }
+
+    /* Color dots */
+    .color-options {
+        display: flex;
+        justify-content: flex-end;
+        gap: 4px;
+        margin-top: -15px;
+        margin-bottom: 10px;
+    }
+
+    .color-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+        border: 1px solid #aaa;
+    }
+
+    .dot-black {
+        background: #111;
+    }
+
+    .dot-brown {
+        background: #8b6f47;
+    }
+
+    .dot-white {
+        background: #fff;
+    }
+
+    .dot-beige {
+        background: #d8c7a3;
+    }
+
+    /* Add to bag */
+    .bag-button {
+        display: block;
+        width: 100%;
+        border: none;
+        background: #fff;
+        border-top: 1px solid #ddd;
+        padding: 10px;
+        font-size: 10px;
+        text-transform: uppercase;
+        color: #222;
+        text-align: center;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .bag-button:hover {
+        background: #111;
+        color: white;
+    }
+
+    /* View Product */
+    .view-product {
+        display: block;
+        margin-top: 8px;
+        text-align: center;
+        border: 1px solid #222;
+        padding: 9px;
+        text-decoration: none;
+        color: #222;
+        font-size: 11px;
+        text-transform: uppercase;
+        transition: 0.3s;
+    }
+
+    .view-product:hover {
+        background: #111;
+        color: white;
+    }
+
+    /* No products */
+    .no-products {
+        text-align: center;
+        padding: 80px;
+        font-size: 20px;
+        color: #555;
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+        .product-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 800px) {
+        .product-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .product-image {
+            height: 330px;
+        }
+
+        .category-menu {
+            display: none;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .product-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .product-image {
+            height: 400px;
+        }
+
+        .category-header {
+            padding-left: 20px;
+        }
+
+        .product-section {
+            padding: 10px 15px 40px;
+        }
+    }
+</style>
+
+
+<!-- Category Header -->
+<header class="category-header">
+
+</header>
+
+
+<!-- Products -->
+<section class="product-section">
+
+    <div class="product-container">
+
+        {% if products %}
+
+        <div class="product-grid">
+
+            {% for product in products %}
+
+            <div class="product-card">
+
+                {% if product.is_sale %}
+                    <div class="sale-badge">
+                        SALE
+                    </div>
+                {% endif %}
+<br>
+
+                <!-- Product Image -->
+
+                <a href="{% url 'productsdet' product.id %}">
+
+                    <img
+                        class="product-image"
+                        src="{{ product.image.url }}"
+                        alt="{{ product.name }}"
+                    >
+
+                </a>
+
+
+                <!-- Product Information -->
+
+                <div class="product-info">
+
+                    <div class="product-name">
+                        {{ product.name }}
+                    </div>
+
+
+                    <!-- Price -->
+
+                    <div class="product-price">
+
+                        {% if product.is_sale %}
+
+                            <span class="old-price">
+                                ${{ product.price }}
+                            </span>
+
+                            <span class="sale-price">
+                                ${{ product.sale_price }}
+                            </span>
+
+                        {% else %}
+
+                            ${{ product.price }}
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Color Dots -->
+
+                    <div class="color-options">
+
+                        <span class="color-dot dot-black"></span>
+
+                        <span class="color-dot dot-brown"></span>
+
+                        <span class="color-dot dot-white"></span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Add To Bag -->
+
+                <a
+                    href="{% url 'productsdet' product.id %}"
+                    class="bag-button"
+                >
+                    ADD TO BAG
+                </a>
+
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+            <div class="no-products">
+                No products found in this category.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

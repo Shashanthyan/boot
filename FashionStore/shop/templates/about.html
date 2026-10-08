@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container hero-content d-flex align-items-center ">
+        <div class="row">
+            <div class="col">
+                <h1>ABOUT US</h1>
+                <button class="btn">home/page/shop</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+  <!-- HOW MODISH STARTED -->
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+
+        <div class="col-lg-6">
+          <div class="image-box">
+            <img src="{%static 'images/banner3.jpg'%}" alt="clothes hanger">
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <h2>How Modish Started</h2>
+          <p>
+            In commodo auctor eget congue sit. Ultrices eget pretium sit euismod mi id risus,
+            aliquam odio posuere ac in nisl sed augue. Porta aenean egestas malesuada in
+            pulvinar enim viverra.
+          </p>
+
+          <ul class="check-list">
+            <li>Porta aenean egestas malesuada in pulvinar enim viverra.</li>
+            <li>Porta aenean egestas malesuada in pulvinar enim viverra.</li>
+            <li>Porta aenean egestas malesuada in pulvinar enim viverra.</li>
+          </ul>
+
+          <button class="btn btn-outline-dark">Read Blog</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- YOU CAN BUY BEST PRODUCTS -->
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+
+        <div class="col-lg-6 order-lg-1 order-2">
+          <h2>You Can Buy Best Products From Modish.</h2>
+          <p>
+            Aliquet nunc vitae interdum mauris pretium lectus mauris viverra ornare quam
+            diam felis. Ultrices eget pretium sit euismod mi id risus, aliquam odio posuere
+            ac in nisl sed augue.
+          </p>
+
+          <p>
+            Ultrices eget pretium sit euismod mi id risus, aliquam odio posuere ac in nisl
+            sed augue. Porta aenean egestas malesuada in pulvinar enim viverra.
+          </p>
+        </div>
+
+        <div class="col-lg-6 order-lg-2 order-1">
+          <div class="image-box">
+            <img src="{%static 'images/banner1.jpg'%}" alt="fashion models">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SUBSCRIBE ================= -->
+
+  <section class="subscribe-section">
+
+    <div class="container">
+
+      <h1 class="big-text">Subscribe Us</h1>
+
+      <div class="subscribe-box">
+
+        <input
+          type="email"
+          placeholder="Write your email address here..."
+        >
+
+        <button>
+         <a href="{% url 'login' %}">SUBSCRIBE</a> 
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+  {% endblock %}
+
+</body>
+</html>
